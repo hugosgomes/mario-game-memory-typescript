@@ -6,11 +6,13 @@ function App() {
   return (
     <div className="App">
       <div className="container">
-        {
-          characters.map((character => (
-            <Card imageUrl={character.imageUrl}/>
-          )))
-        }
+          {
+            characters.map((character => (
+              <div className="container-item">
+                <Card imageUrl={character.imageUrl}/>
+              </div>
+            )))
+          }
       </div>
     </div>
   );
