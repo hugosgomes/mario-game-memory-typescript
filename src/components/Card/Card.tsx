@@ -11,10 +11,12 @@ const Card = ({ imageUrl }: CardProps) => {
   return (
     <div className="card" onClick={() => setTurned(!turned)}>
       <div className={`card-container ${turned ? "turned" : ""}`}>
-        <div className="front">
+        <div className="front">          
+          <img src="back-card.png" alt="" />
+        </div>
+        <div className="back">
           <img src={imageUrl} alt="" />
         </div>
-        <div className="back"></div>
       </div>
     </div>
   );

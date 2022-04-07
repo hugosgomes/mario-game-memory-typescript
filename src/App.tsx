@@ -1,13 +1,15 @@
 import './App.scss';
 import Card from "./components/Card/Card"
-import characters from "./data/data.json"
+import Characters from "./data/data.json"
+
+const doubleCharacteres = [...Characters, ...Characters];
 
 function App() {
   return (
     <div className="App">
       <div className="container">
           {
-            characters.map((character => (
+            doubleCharacteres.map((character => (
               <div className="container-item">
                 <Card imageUrl={character.imageUrl}/>
               </div>
