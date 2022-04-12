@@ -1,26 +1,34 @@
 [
   {
+    "id": "0d5e78e0-6d86-420e-834e-eec08e7482a3",
     "imageUrl": "bowser.png"
   },
   {
+    "id": "8c65f64a-dccb-4017-a15a-106046a48be5",
     "imageUrl": "luigi.png"
   },
   {
+    "id": "ec2dc0b1-de7d-47a6-903b-9266ef1d1807",
     "imageUrl": "mario.png"
   },
   {
+    "id": "657914bb-0a74-47c4-8452-5fc58872aaa3",
     "imageUrl": "peach.png"
   },
   {
+    "id": "2de597c7-9425-4b56-af09-063f68dafcf1",
     "imageUrl": "suzie.png"
   },
   {
+    "id": "8c1300da-edc1-4c31-9c6e-b7a3df5202c6",
     "imageUrl": "toad.png"
   },
   {
+    "id": "bba6acc4-1e41-478b-9711-5be25cda8f6b",
     "imageUrl": "wario.png"
   },
   {
+    "id": "eceec647-613d-480f-936b-691ac11630a1",
     "imageUrl": "yoshi.png"
   }
 ]

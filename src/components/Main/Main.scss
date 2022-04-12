@@ -1,0 +1,14 @@
+main {
+    padding: 24px;
+    margin: 0 auto;
+    height: 100vh;
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 900px;
+    justify-content: center;
+    .container-item {
+      width: 25%;
+      display: flex;
+      justify-content: center;
+    }
+}

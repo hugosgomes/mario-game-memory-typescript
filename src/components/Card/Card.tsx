@@ -1,21 +1,36 @@
 import "./Card.scss";
-import { useState } from "react";
+import { Char } from "../../model/Char";
 
 interface CardProps {
-  imageUrl: string;
+  char: Char;
+  closeChars: any;
+  openChar: any;
+  index: number;
 }
 
-const Card = ({ imageUrl }: CardProps) => {
-  const [turned, setTurned] = useState(false);
+const Card = ({ char, closeChars, index, openChar }: CardProps) => {
+
+  const changeStatusChar = () => {
+    char.status === "opened"
+      ? (char.status = "closed")
+      : (char.status = "opened");
+  };
 
   return (
-    <div className="card" onClick={() => setTurned(!turned)}>
-      <div className={`card-container ${turned ? "turned" : ""}`}>
-        <div className="front">          
+    <div
+      className="card"
+      onClick={() => {
+        changeStatusChar();
+        closeChars();
+        openChar(index)
+      }}
+    >
+      <div className={`card-container ${char.status !== "closed" ? "turned" : ""}`}>
+        <div className="front">
           <img src="back-card.png" alt="" />
         </div>
         <div className="back">
-          <img src={imageUrl} alt="" />
+          <img src={char.imageUrl} alt="" />
         </div>
       </div>
     </div>
