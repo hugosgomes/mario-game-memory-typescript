@@ -53,7 +53,9 @@ const Main = ({ handleResult }:MainsProps) => {
   }
 
   const openChar = (index:number) => {
-    setStatusChar(index, "opened")
+    if (doubleCharacteres[index].status === "closed") {
+      setStatusChar(index, "opened")      
+    }
   }
 
   const closeChars = () => {
