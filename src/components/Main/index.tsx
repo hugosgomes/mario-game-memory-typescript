@@ -2,7 +2,7 @@ import Card from "../Card/Card";
 import { Char, status } from "../../model/Char"
 import Characters from "../../data/data.json"
 import "./Main.scss"
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const randomArray = (array:Char[]) => {
   const result = [];
@@ -23,14 +23,13 @@ const insertStatusInCharacters = ():Char[] => {
   return Characters.map((character) => {return {...character, status: "closed"}})
 }
 
-const Main = () => {
+interface MainsProps {
+  handleResult: any;
+}
+
+const Main = ({ handleResult }:MainsProps) => {
   const [doubleCharacteres, setDoubleCharacteres] = useState(randomArray([...insertStatusInCharacters(), ...insertStatusInCharacters()]))
   const [loading, setLoading] = useState(false)
-
-  useEffect(() => {
-    console.log("doubleCharacteres")
-  }, [doubleCharacteres])
-  
 
   const clickChar = (index:number) => {
     if (loading) return;
@@ -43,10 +42,12 @@ const Main = () => {
       setTimeout(() => {
         if (isCorrectPlay(charsTempFiltered)) {
           completeChars();
+          handleResult("Correto")
         } else {
           closeChars();
+          handleResult("Errado")
         }
-      }, 2000);
+      }, 1500);
       setLoading(false);
     }
   }
