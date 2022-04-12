@@ -1,5 +1,7 @@
 export interface Char {
   id: string;
   imageUrl: string;
-  status?: "closed" | "opened" | "completed";
+  status?: status;
 }
+
+export type status = "closed" | "opened" | "completed"

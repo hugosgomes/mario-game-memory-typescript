@@ -1,8 +1,8 @@
 import Card from "../Card/Card";
-import { Char } from "../../model/Char"
+import { Char, status } from "../../model/Char"
 import Characters from "../../data/data.json"
 import "./Main.scss"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const randomArray = (array:Char[]) => {
   const result = [];
@@ -25,33 +25,62 @@ const insertStatusInCharacters = ():Char[] => {
 
 const Main = () => {
   const [doubleCharacteres, setDoubleCharacteres] = useState(randomArray([...insertStatusInCharacters(), ...insertStatusInCharacters()]))
-  const [rerender, setrerender] = useState(false)
+  const [loading, setLoading] = useState(false)
 
-  const closeChars = () => {
-    const charsTemp = doubleCharacteres.filter((character => character.status === "opened"))
-    if (charsTemp.length === 2) {
-      verifyCharsOpened(charsTemp)
+  useEffect(() => {
+    console.log("doubleCharacteres")
+  }, [doubleCharacteres])
+  
+
+  const clickChar = (index:number) => {
+    if (loading) return;
+    if (getCharsOpened().length === 0) {
+      openChar(index);
+    } else if (getCharsOpened().length === 1) {
+      openChar(index);
+      setLoading(true);
+      const charsTempFiltered = getCharsOpened();
+      setTimeout(() => {
+        if (isCorrectPlay(charsTempFiltered)) {
+          completeChars();
+        } else {
+          closeChars();
+        }
+      }, 2000);
+      setLoading(false);
     }
-  }
-
-  const verifyCharsOpened = (charsTemp:Char[]) => {
-    const status = charsTemp[0].id === charsTemp[1].id ? "completed" : "closed";
-    setTimeout(() => {      
-      setDoubleCharacteres(doubleCharacteres.map(char => {
-        char.status === "opened" && (char.status = status);
-        return char;
-      }));
-    }, 3000);
   }
 
   const openChar = (index:number) => {
-    const charsTempFiltered = doubleCharacteres.filter((character => character.status === "opened"))
-    if (charsTempFiltered.length <= 2) {
-      const charsTemp = doubleCharacteres;
-      charsTemp[index].status = "opened";
-      setDoubleCharacteres(charsTemp);
-      setrerender(!rerender)
-    }
+    setStatusChar(index, "opened")
+  }
+
+  const closeChars = () => {
+    setDoubleCharacteres(doubleCharacteres.map(char => {
+      char.status === "opened" && (char.status = "closed");
+      return char;
+    }));
+  }
+
+  const completeChars = () => {
+    setDoubleCharacteres(doubleCharacteres.map(char => {
+      char.status === "opened" && (char.status = "completed");
+      return char;
+    }));
+  }
+
+  const setStatusChar = (index:number, status: status) => {
+    const charsTemp = [...doubleCharacteres];
+    charsTemp[index].status = status;
+    setDoubleCharacteres(charsTemp);
+  }
+
+  const isCorrectPlay = (charsTempFiltered:Char[]) => {
+    return charsTempFiltered[0].id === charsTempFiltered[1].id;
+  }
+
+  const getCharsOpened = () => {
+    return doubleCharacteres.filter((character => character.status === "opened"))
   }
   
   return (
@@ -59,7 +88,7 @@ const Main = () => {
       {
         doubleCharacteres.map(((character, index) => (
           <div className="container-item" key={index}>
-            <Card char={character} closeChars={closeChars} index={index} openChar={openChar}/>
+            <Card char={character} onClick={clickChar} index={index}/>
           </div>
         )))
       }

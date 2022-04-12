@@ -3,29 +3,21 @@ import { Char } from "../../model/Char";
 
 interface CardProps {
   char: Char;
-  closeChars: any;
-  openChar: any;
+  onClick: any;
   index: number;
 }
 
-const Card = ({ char, closeChars, index, openChar }: CardProps) => {
-
-  const changeStatusChar = () => {
-    char.status === "opened"
-      ? (char.status = "closed")
-      : (char.status = "opened");
-  };
-
+const Card = ({ char, onClick, index }: CardProps) => {
   return (
     <div
       className="card"
       onClick={() => {
-        changeStatusChar();
-        closeChars();
-        openChar(index)
+        onClick(index);
       }}
     >
-      <div className={`card-container ${char.status !== "closed" ? "turned" : ""}`}>
+      <div
+        className={`card-container ${char.status !== "closed" ? "turned" : ""}`}
+      >
         <div className="front">
           <img src="back-card.png" alt="" />
         </div>
