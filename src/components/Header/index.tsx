@@ -1,13 +1,16 @@
 import "./Header.scss"
+import Title from "../Title/Title"
 
 interface HeaderProps {
-  result: string;
+  points: number;
 }
 
-const Header = ({ result }:HeaderProps) => {
+const Header = ({ points }:HeaderProps) => {
   return (
     <header>
-      {result}
+      <Title />
+      <p className="points-label">Mario</p>
+      <p className="points-text">x {points}</p>
     </header>
   )
 }

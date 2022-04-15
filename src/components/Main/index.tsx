@@ -42,10 +42,10 @@ const Main = ({ handleResult }:MainsProps) => {
       setTimeout(() => {
         if (isCorrectPlay(charsTempFiltered)) {
           completeChars();
-          handleResult("Correto")
+          handleResult(true)
         } else {
           closeChars();
-          handleResult("Errado")
+          handleResult(false)
         }
       }, 1500);
       setLoading(false);

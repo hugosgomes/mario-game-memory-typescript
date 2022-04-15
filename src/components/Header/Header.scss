@@ -1,5 +1,15 @@
+@import url("../../fonts/fonts.scss");
+
 header {
-  font-size: 24px;
-  font-weight: bold;
-  color: blue;
+  p{
+    font-family: "SuperMarioWorld";
+    font-size: 16px;
+    font-weight: bold;
+    &.points-label{
+      color: #E92313;
+    }
+    &.points-text{
+      color: #000;
+    }
+  }
 }

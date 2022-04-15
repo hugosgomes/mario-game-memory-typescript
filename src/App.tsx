@@ -4,16 +4,16 @@ import Header from './components/Header';
 import { useState } from 'react';
 
 function App() {
-  const [result, setResult] = useState("Inicial")
+  const [points, setPoints] = useState(0)
 
-  const handleResult = (result:string) => {
-    setResult(result)
+  const handleResult = (result:boolean) => {
+    result && setPoints(points + 1)
   }
 
   return (
     <div className="App">
       <div className="container">
-        <Header result={result} />
+        <Header points={points} />
         <Main handleResult={handleResult} />
       </div>
     </div>

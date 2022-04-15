@@ -19,10 +19,10 @@ const Card = ({ char, onClick, index }: CardProps) => {
         className={`card-container ${char.status !== "closed" ? "turned" : ""}`}
       >
         <div className="front">
-          <img src="back-card.png" alt="" />
+          <img src="assets/images/back-card.png" alt="" />
         </div>
         <div className="back">
-          <img src={char.imageUrl} alt="" />
+          <img src={`assets/images/${char.imageUrl}`} alt="" />
         </div>
       </div>
     </div>
