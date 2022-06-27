@@ -8,6 +8,10 @@ interface CardProps {
 }
 
 const Card = ({ char, onClick, index }: CardProps) => {
+
+  const isTurned = () => {
+    return char.status !== "closed" ? "turned" : ""
+  }
   return (
     <div
       className="card"
@@ -16,7 +20,7 @@ const Card = ({ char, onClick, index }: CardProps) => {
       }}
     >
       <div
-        className={`card-container ${char.status !== "closed" ? "turned" : ""}`}
+        className={`card-container ${isTurned()}`}
       >
         <div className="front">
           <img src="assets/images/back-card.png" alt="" />

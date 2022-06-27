@@ -1,46 +1,25 @@
 import Card from "../Card/Card";
-import { Char, status } from "../../model/Char"
-import Characters from "../../data/data.json"
 import "./Main.scss"
-import { useState } from "react";
-
-const randomArray = (array:Char[]) => {
-  const result = [];
-  const length = array.length;
-  for (let i = 0; i < length; i++) {
-    const randomIndex = array.length >= 1 ? getRandomInt(0, array.length - 1) : 0;
-    const randomElement = array.splice(randomIndex, 1)[0];
-    result.push(randomElement);
-  }
-  return result;
-}
-
-const getRandomInt = (min:number, max:number) => {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-const insertStatusInCharacters = ():Char[] => {
-  return Characters.map((character) => {return {...character, status: "closed"}})
-}
+import { useReducer, useState } from "react";
+import { initialState, charReducer } from "../../store";
 
 interface MainsProps {
   handleResult: any;
 }
 
 const Main = ({ handleResult }:MainsProps) => {
-  const [doubleCharacteres, setDoubleCharacteres] = useState(randomArray([...insertStatusInCharacters(), ...insertStatusInCharacters()]))
+  const [chars, dispatch] = useReducer(charReducer, initialState)
   const [loading, setLoading] = useState(false)
 
   const clickChar = (index:number) => {
     if (loading) return;
-    if (getCharsOpened().length === 0) {
-      openChar(index);
-    } else if (getCharsOpened().length === 1) {
-      openChar(index);
-      setLoading(true);
-      const charsTempFiltered = getCharsOpened();
+    const charsTempFiltered = getCharsOpened();
+    openChar(index);
+    
+    if (charsTempFiltered.length === 1) {
+      setLoading(true);      
       setTimeout(() => {
-        if (isCorrectPlay(charsTempFiltered)) {
+        if (isCorrectPlay()) {
           completeChars();
           handleResult(true)
         } else {
@@ -53,43 +32,30 @@ const Main = ({ handleResult }:MainsProps) => {
   }
 
   const openChar = (index:number) => {
-    if (doubleCharacteres[index].status === "closed") {
-      setStatusChar(index, "opened")      
-    }
+    dispatch({type: 'openChar', payload: index})
   }
 
   const closeChars = () => {
-    setDoubleCharacteres(doubleCharacteres.map(char => {
-      char.status === "opened" && (char.status = "closed");
-      return char;
-    }));
+    dispatch({type: 'closeChars'})
   }
 
   const completeChars = () => {
-    setDoubleCharacteres(doubleCharacteres.map(char => {
-      char.status === "opened" && (char.status = "completed");
-      return char;
-    }));
+    dispatch({type: 'completeChars'})
   }
 
-  const setStatusChar = (index:number, status: status) => {
-    const charsTemp = [...doubleCharacteres];
-    charsTemp[index].status = status;
-    setDoubleCharacteres(charsTemp);
-  }
-
-  const isCorrectPlay = (charsTempFiltered:Char[]) => {
+  const isCorrectPlay = () => {
+    const charsTempFiltered = getCharsOpened();
     return charsTempFiltered[0].id === charsTempFiltered[1].id;
   }
 
   const getCharsOpened = () => {
-    return doubleCharacteres.filter((character => character.status === "opened"))
+    return chars.filter((character => character.status === "opened"))
   }
   
   return (
     <main>
       {
-        doubleCharacteres.map(((character, index) => (
+        chars.map(((character, index) => (
           <div className="container-item" key={index}>
             <Card char={character} onClick={clickChar} index={index}/>
           </div>
